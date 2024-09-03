@@ -17,6 +17,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
@@ -32,7 +39,7 @@ jobs:
           sed -i 's|PLACEHOLDER_FAMILY|${{ secrets.AWS_TASK_FAMILY }}|' ecs-task-definition.json
           sed -i 's|PLACEHOLDER_CONTAINER_NAME|${{ secrets.AWS_CONTAINER_NAME }}' ecs-task-definition.json
           sed -i 's|PLACEHOLDER_IMAGE|${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest|' ecs-task-definition.json
-          sed -i 's|PLACEHOLDER_ACCOUNT_ID|${{ secrets.AWS_ACCOUNT }}|' ecs-task-definition.json 
+          sed -i 's|PLACEHOLDER_ACCOUNT_ID|${{ secrets.AWS_ACCOUNT }}|' ecs-task-definition.json
 
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
