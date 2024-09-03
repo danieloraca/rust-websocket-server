@@ -20,7 +20,7 @@ jobs:
       - name: Deploy CloudFormation stack
         run: |
           aws cloudformation deploy \
-            --template-file cloud-formation.yaml \
+            --template-file cloud-formation.yml \
             --stack-name rust-websocket-server-stack \
             --capabilities CAPABILITY_IAM \
             --parameter-overrides \
