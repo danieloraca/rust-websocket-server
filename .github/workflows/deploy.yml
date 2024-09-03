@@ -37,7 +37,7 @@ jobs:
       - name: Replace placeholders in ECS task definition
         run: |
           sed -i 's|PLACEHOLDER_FAMILY|${{ secrets.AWS_TASK_FAMILY }}|' ecs-task-definition.json
-          sed -i 's|PLACEHOLDER_CONTAINER_NAME|${{ secrets.AWS_CONTAINER_NAME }}' ecs-task-definition.json
+          sed -i 's|PLACEHOLDER_CONTAINER_NAME|${{ secrets.AWS_CONTAINER_NAME }}|' ecs-task-definition.json
           sed -i 's|PLACEHOLDER_IMAGE|${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest|' ecs-task-definition.json
           sed -i 's|PLACEHOLDER_ACCOUNT_ID|${{ secrets.AWS_ACCOUNT }}|' ecs-task-definition.json
 
