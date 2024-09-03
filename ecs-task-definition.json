@@ -1,10 +1,10 @@
 {
-  "family": "your-task-family",
+  "family": "PLACEHOLDER_FAMILY",
   "networkMode": "awsvpc",
   "containerDefinitions": [
     {
-      "name": "your-container-name",
-      "image": "<your-account-id>.dkr.ecr.<your-region>.amazonaws.com/your-repo-name:latest",
+      "name": "PLACEHOLDER_CONTAINER_NAME",
+      "image": "PLACEHOLDER_IMAGE",
       "cpu": 256,
       "memory": 512,
       "essential": true,
@@ -20,6 +20,6 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
   "memory": "512",
-  "executionRoleArn": "arn:aws:iam::<your-account-id>:role/ecsTaskExecutionRole",
-  "taskRoleArn": "arn:aws:iam::<your-account-id>:role/ecsTaskExecutionRole"
+  "executionRoleArn": "arn:aws:iam::PLACEHOLDER_ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::PLACEHOLDER_ACCOUNT_ID:role/ecsTaskExecutionRole"
 }

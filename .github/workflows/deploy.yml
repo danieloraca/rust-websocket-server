@@ -23,9 +23,16 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         run: |
-          docker build -t your-repo-name .
-          docker tag your-repo-name:latest <your-account-id>.dkr.ecr.<your-region>.amazonaws.com/your-repo-name:latest
-          docker push <your-account-id>.dkr.ecr.<your-region>.amazonaws.com/your-repo-name:latest
+          docker build -t rust-websocket-server .
+          docker tag rust-websocket-server:latest ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest
+          docker push ${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest
+
+      - name: Replace placeholders in ECS task definition
+        run: |
+          sed -i 's|PLACEHOLDER_FAMILY|${{ secrets.AWS_TASK_FAMILY }}|' ecs-task-definition.json
+          sed -i 's|PLACEHOLDER_CONTAINER_NAME|${{ secrets.AWS_CONTAINER_NAME }}' ecs-task-definition.json
+          sed -i 's|PLACEHOLDER_IMAGE|${{ secrets.AWS_ACCOUNT }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest|' ecs-task-definition.json
+          sed -i 's|PLACEHOLDER_ACCOUNT_ID|${{ secrets.AWS_ACCOUNT }}|' ecs-task-definition.json 
 
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
