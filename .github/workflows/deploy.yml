@@ -17,6 +17,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Deploy CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --template-file cloud-formation.yaml \
+            --stack-name rust-websocket-server-stack \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides \
+              ImageUri=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest \
+            --region ${{ secrets.AWS_REGION }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
