@@ -3,17 +3,17 @@ Resources:
   WebSocketECRRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: my-websocket-app
+      RepositoryName: rust-websocket-server
 
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: my-ecs-cluster
+      ClusterName: PLACEHOLDER_CLUSTER_NAME
 
   ECSTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: my-websocket-app
+      Family: PLACEHOLDER_TASK_FAMILY
       Cpu: "256"
       Memory: "512"
       NetworkMode: awsvpc
@@ -21,8 +21,8 @@ Resources:
         - FARGATE
       ExecutionRoleArn: !GetAtt ECSServiceRole.Arn
       ContainerDefinitions:
-        - Name: my-websocket-container
-          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/my-websocket-app:latest"
+        - Name: PLACEHOLDER_CONTAINER_NAME
+          Image: !Sub "PLACEHOLDER_ACCOUNT_ID.dkr.ecr.PLACEHOLDER_REGION.amazonaws.com/rust-websocket-server:latest"
           Essential: true
           PortMappings:
             - ContainerPort: 80
