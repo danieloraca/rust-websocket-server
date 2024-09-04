@@ -24,16 +24,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy CloudFormation stack
-        run: |
-          aws cloudformation deploy \
-            --template-file cloud-formation.yml \
-            --stack-name rust-websocket-server-stack \
-            --capabilities CAPABILITY_IAM \
-            --parameter-overrides \
-              ImageUri=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest \
-            --region ${{ secrets.AWS_REGION }}
-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
@@ -58,3 +48,13 @@ jobs:
           service: your-ecs-service-name
           cluster: your-ecs-cluster-name
           wait-for-service-stability: true
+
+      # - name: Deploy CloudFormation stack
+      #   run: |
+      #     aws cloudformation deploy \
+      #       --template-file cloud-formation.yml \
+      #       --stack-name rust-websocket-server-stack \
+      #       --capabilities CAPABILITY_IAM \
+      #       --parameter-overrides \
+      #         ImageUri=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/rust-websocket-server:latest \
+      #       --region ${{ secrets.AWS_REGION }}
