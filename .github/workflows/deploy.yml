@@ -45,8 +45,8 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ecs-task-definition.json
-          service: your-ecs-service-name
-          cluster: your-ecs-cluster-name
+          service: ${{ secrets.AWS_SERVICE_NAME }}
+          cluster: ${{ secrets.AWS_CLUSTER_NAME }}
           wait-for-service-stability: true
 
       # - name: Deploy CloudFormation stack
